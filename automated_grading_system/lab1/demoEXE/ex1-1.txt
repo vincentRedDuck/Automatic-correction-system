@@ -1,0 +1,23 @@
+// Typing Exercise
+
+Use int when you need to store a whole number without decimals, like 35 or 1000, and float or double when you need a floating point number (with decimals), like 9.99 or 3.14515.
+
+int myNum = 5; // Integer (whole number without decimals)
+double myFloatNum = 5.99; // Floating point number (with decimals)
+
+/* This is a comment */
+
+The char data type is used to store a single character. The character must be surrounded by single quotes, like 'A' or 'c'.
+
+The string type is used to store a sequence of characters (text). This is not a built-in type, but it behaves like one in its most basic usage. String values must be surrounded by double quotes.
+
+char myLetter = 'D'; // Character
+string myText = "Hello!@#$%&*()|"; // String (text)
+
+
+/* This is a comment */
+
+A boolean data type is declared with the bool keyword and can only take the values true or false. When the value is returned, true = 1 and false = 0.
+
+bool myBoolean = true; // Boolean (true or false)
+
