@@ -153,7 +153,7 @@ int main(){
             
             int outfd = open(LOGFILE, O_CREAT | O_WRONLY | O_APPEND, 0700);
             
-	    if(outfd == 0)
+	        if(outfd == 0)
                 cerr<< "Error: open " << LOGFILE << endl;
 
             int saved_stdout = dup(1);  //avoid that python program print string to log file

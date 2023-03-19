@@ -16,7 +16,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from os import listdir
 
 
-TAcount = [ "demo", "123456789", "TA_shangming"] # Rou: what is this ?
+TAcount = [ "demo", "123456789", "TA_shangming"] 
 
 def diff(list1, list2) :
     return (list(list(set(list1) - set(list2) ) + list(set(list2) - set(list1) ) ) )
@@ -105,8 +105,8 @@ for _ in range(1):
     
     f = open(okDir + nowFile, 'r')
     
-    write_unique_lines(okDir+exerciseNumber+'.log') # Rou: delete same students
-    write_unique_lines(labDir+exerciseNumber+'.log') # Rou: delete same students
+    write_unique_lines(okDir+exerciseNumber+'.log') # delete same students
+    write_unique_lines(labDir+exerciseNumber+'.log') # delete same students
     
     studentOKArray = []
     for line in f.readlines() :
@@ -119,8 +119,8 @@ for _ in range(1):
 
     #------ get items which need to update---------
     
-    studentUpdateArray = studentAllArray # Rou: It can be compared after check the cell is empty or not
-    # studentUpdateArray = diff(studentAllArray, studentOKArray)
+    studentUpdateArray = studentAllArray # It can be compared after check the cell is empty or not
+    studentUpdateArray = diff(studentAllArray, studentOKArray)
     # print(studentUpdateArray, studentAllArray, studentOKArray)
     #---------- end get updating items  -----------
     
@@ -131,16 +131,15 @@ for _ in range(1):
     #find LAB # position. (In order to get base column location)
 
     lab_number = 'LAB'+'{:02}'.format(int(labNumber))
-    leftPos = lab.find(lab_number) # need to be redefined
+    leftPos = lab.find(lab_number)
     # according exercise # to shift base column location.
     # print('lab_number for test', lab_number, exerciseNumber)
     
-    targetCol = leftPos.col + int(exerciseNumber) - 1 # need to be redefined
+    targetCol = leftPos.col + int(exerciseNumber) - 1 
     f = open(okDir + nowFile, "a+")
   
 
-    if len(stuSheet) == 0:
-        stuSheet = lab.col_values(3)
+    stuSheet = lab.col_values(3)
     
     for value in studentUpdateArray : 
         try :
@@ -157,40 +156,25 @@ for _ in range(1):
             #print("The student ID \"%s\" don't exist." %(value))
             stuSheet.append(value)
             targetRow = len(stuSheet)
-            lab.update(chr(65 + 1 - 1) + str(targetRow), value)
+            lab.update(chr(65 + 3 - 1) + str(targetRow), value)
         
         targetCell = lab.cell(str(targetRow), str(targetCol))
         # print('targetCell', targetCell, targetCell.value)
 
-        if targetCell.value  is None : # Rou: when there is nothing in this cell 
+        if targetCell.value  is None : # when there is nothing in this cell 
             
-            targetColStr = ""  #line 146 ~ line 156 need to rewrite!!!(11/23)
-            '''
-            if int(targetCol) / 26 >= 1:
-                if int(targetCol) % 26 == 0:
-                    targetColStr = 'Z'
-                else:
-                    targetColStr = 'A'
-                    targetColStr += chr(65 + (int(targetCol) % 26) - 1)
-            else:
-                targetColStr = chr(65 + int(targetCol) - 1)
-            '''
-            
-            # print("test: %s" % targetColStr, file=sys.stderr)
+            targetColStr = ""  
             lab.update_cell(targetCell.row, targetCell.col, score)
-            pass
-                        
-            #lab.update(targetColStr + str(targetRow), score, value_input_option='USER_ENTERED')
-            
-            #lab.update(chr( 65 + int(targetCol) - 1) + str(targetRow), score, value_input_option='USER_ENTERED')
-            #print("lab%s ex%s col:%s row:%s studentID: %s Updating (%s)" %(labNumber, exerciseNumber, targetCol, targetRow, value, score))
+            #print("lab%s ex%s col:%s row:%s studentID:%s Score exists %s. No updates" %(labNumber, exerciseNumber, targetCol, targetRow, value, targetCell.value))
+            pass               
+
         else :
             pass
             #print("lab%s ex%s col:%s row:%s studentID:%s Score exists %s. No updates" %(labNumber, exerciseNumber, targetCol, targetRow, value, targetCell.value))
 
         f.write("%s\n" %(value))     
 
-        #time.sleep(0.0000001)
+        time.sleep(0.0000001)
     
     f.close()
     #------- end write -------------
